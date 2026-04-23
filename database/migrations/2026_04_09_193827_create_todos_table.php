@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('todos', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->nullable(false);
+            $table->dateTime('completed_at')->nullable(true);
             $table->timestamps();
         });
     }

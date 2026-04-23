@@ -9,4 +9,9 @@ class Todo extends Model
 {
     /** @use HasFactory<\Database\Factories\TodoFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'completed_at'
+    ];
 }
