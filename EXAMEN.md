@@ -1,135 +1,90 @@
-# Examen — Module Candidatures
+# Examen — Finalisation du module Todos
 
 ## Contexte
 
-Tu pars du projet "Mon app" qui contient déjà un module **Todos** entièrement fonctionnel : liste, création, détail, édition, suppression, ainsi qu'une fonctionnalité de commentaires sur chaque todo.
+Tu reçois un projet où le module **Todos** est partiellement implémenté. Certaines pages fonctionnent, d'autres affichent des données statiques codées en dur, et plusieurs actions essentielles ne sont pas opérationnelles. Le module **Candidatures** est, lui, complètement absent.
 
-Ta mission est d'ajouter à ce projet un second module — **Candidatures** — accessible depuis la même barre de navigation et construit sur les mêmes principes. À la fin de l'examen, l'application doit proposer les deux modules côte à côte, chacun pleinement opérationnel.
-
----
-
-## Objectif
-
-Réaliser **intégralement** le module Candidatures : la base de données, le code applicatif, et les vues (HTML + CSS).
-
-L'évaluation porte sur :
-- le bon fonctionnement de toutes les actions attendues,
-- la persistance des données entre les chargements de page,
-- la fidélité au design fourni,
-- la cohérence de l'intégration avec le reste de l'application.
+Ta mission principale est de compléter le module Todos pour qu'il fonctionne intégralement de bout en bout, et d'y ajouter un nouveau champ. Deux objectifs bonus sont proposés à celles et ceux qui terminent l'essentiel : la mise en service de la fonctionnalité de commentaires, et la réalisation complète du module Candidatures.
 
 ---
 
-## Données à manipuler
+## État du projet remis
 
-### Une candidature
+À la prise en main du projet, voici ce dont tu disposes et ce qui te manque.
 
-Représente une démarche en cours pour décrocher un poste. Chaque candidature possède :
+### Ce qui est déjà en place
 
-- **Entreprise** : le nom de l'entreprise visée (ex. *Acme Corp*)
-- **Poste** : l'intitulé du poste (ex. *Développeur full-stack*)
-- **Statut** : l'avancement de la candidature, parmi exactement ces 4 valeurs :
-    - Postulée
-    - Entretien
-    - Refusée
-    - Acceptée
-- **Postulée le** : la date à laquelle la candidature a été envoyée
+- La page **liste des todos** (`index`) affiche correctement les todos enregistrées en base ainsi qu'un compteur de tâches terminées.
+- Depuis la liste, il est possible de **basculer le statut** d'une todo (terminée / à faire), de **supprimer** une todo, et d'accéder aux pages de détail, de création et d'édition via les liens correspondants.
+- Le formulaire de **création** est fonctionnel : la todo créée apparaît bien dans la liste après soumission.
+- La barre de navigation, le layout partagé et le design global sont en place.
 
-Tous les champs sont obligatoires.
+### Ce qui ne fonctionne pas et doit être réparé
 
-### Une note
-
-Permet à l'utilisateur d'ajouter du contexte, un rappel ou un suivi sur une candidature donnée. Chaque note possède :
-
-- **Contenu** : un texte libre, potentiellement sur plusieurs lignes
-- **Date de création** : renseignée automatiquement au moment de l'ajout
-
-Une candidature peut avoir **zéro, une ou plusieurs notes**. Une note appartient toujours à **une seule** candidature — elle n'existe pas en dehors d'elle.
+- La page de **détail** (`show`) affiche des informations **statiques codées en dur** dans la vue ; elle ne reflète pas la todo réellement consultée.
+- Le **bouton de bascule du statut** présent sur la page de détail n'est pas opérationnel.
+- Le **bouton de modification** présent sur la page de détail ne renvoie pas vers l'édition de la todo réellement consultée — il pointe systématiquement vers la même todo, indépendamment de celle affichée.
+- La **suppression** d'une todo depuis la page de détail n'est pas opérationnelle.
+- La page d'**édition** (`edit`) est **totalement statique** : les champs du formulaire ne sont pas pré-remplis avec les valeurs actuelles de la todo.
+- La **méthode `update`** du contrôleur n'est pas définie : la soumission du formulaire d'édition n'a aucun effet sur la base de données.
 
 ---
 
-## Pages à réaliser
+## Mission principale
 
-### 1. Liste des candidatures
+Tu dois mener à bien les six objectifs suivants. L'ordre est laissé à ta discrétion, mais leur réalisation est obligatoire.
 
-C'est la page d'accueil du module, atteignable depuis le lien "Candidatures" dans la navigation.
+### 1. Rendre la page de détail dynamique
 
-Elle doit afficher **toutes les candidatures enregistrées**, chacune sur une ligne, avec :
+La page de détail doit afficher les informations de la todo réellement consultée (celle dont l'identifiant figure dans l'URL), et non plus des données fixes.
 
-- le nom de l'entreprise,
-- le poste,
-- le statut sous forme de **badge coloré** (cf. plus bas),
-- la date à laquelle la candidature a été envoyée,
-- un lien *Modifier*,
-- un bouton *Supprimer*.
+### 2. Rendre la bascule de statut fonctionnelle depuis la page de détail
 
-Un clic sur le nom de l'entreprise mène vers la page de détail de la candidature.
+Le bouton de bascule présent sur la page de détail doit modifier l'état de la todo (terminée ↔ à faire) de la même manière que celui de la liste, et le changement doit être immédiatement visible.
 
-Un bouton **"+ Nouvelle candidature"** en haut à droite mène vers la page de création.
+### 3. Rendre la modification accessible depuis la page de détail
 
-**Cas limite** : si aucune candidature n'existe encore, la page doit communiquer clairement cet état (zone vide avec un message ou une invitation à en créer une — pas une liste vide sans contexte).
+Le bouton de modification présent sur la page de détail doit mener vers le formulaire d'édition de la **todo réellement consultée**, et non vers une todo figée.
 
----
+### 4. Rendre la suppression fonctionnelle depuis la page de détail
 
-### 2. Création d'une candidature
+Le bouton de suppression présent sur la page de détail doit supprimer la todo concernée et ramener l'utilisateur vers la liste, où elle n'apparaît plus.
 
-Page accessible depuis le bouton "Nouvelle candidature" de la liste.
+### 5. Rendre la page d'édition dynamique
 
-Elle propose un formulaire avec les 4 champs : entreprise, poste, statut, date. Le statut se choisit dans une liste déroulante limitée aux 4 valeurs autorisées.
+Le formulaire d'édition doit être **pré-rempli** avec les valeurs actuelles de la todo (nom et autres champs), de sorte que l'utilisateur modifie un formulaire fidèle à l'état présent en base.
 
-Deux actions sont possibles :
-- **Enregistrer** : la candidature est créée puis l'utilisateur est redirigé vers la liste, où la nouvelle candidature apparaît.
-- **Annuler** : l'utilisateur revient à la liste sans rien créer.
+### 6. Implémenter la méthode `update`
 
-Une mention "← Retour à la liste" en haut de page permet aussi de revenir en arrière.
+La soumission du formulaire d'édition doit persister les modifications en base de données, puis rediriger l'utilisateur de manière cohérente (vers la liste ou vers la page de détail, selon ton choix).
+
+### 7. Ajouter un champ `description` sur les todos
+
+Voir la section dédiée ci-dessous.
 
 ---
 
-### 3. Détail d'une candidature
+## Nouveau champ : `description`
 
-Page atteinte en cliquant sur le nom d'une entreprise depuis la liste.
+Tu dois introduire un nouveau champ **description** sur chaque todo. Il s'agit d'un texte libre, potentiellement multi-ligne, permettant à l'utilisateur de détailler la tâche à accomplir.
 
-Elle présente toutes les informations de la candidature (entreprise, poste, statut, date). Le statut s'affiche avec son **badge coloré**.
+### Comportement attendu
 
-Deux actions sur la candidature elle-même :
-- **Modifier** : mène vers la page d'édition.
-- **Supprimer** : supprime la candidature et renvoie vers la liste, où elle n'apparaît plus.
+- Le champ est **optionnel** : une todo sans description reste valide.
+- Le champ doit être **persisté en base de données** et survivre aux rafraîchissements et redémarrages.
 
-Sous les informations, une **section "Notes"** affiche :
+### Présence dans les vues
 
-- le nombre total de notes,
-- la liste des notes existantes (contenu + indication temporelle, par exemple "il y a 2 heures"),
-- un bouton *Supprimer* à côté de chaque note,
-- en bas, un formulaire avec un champ de texte multi-ligne et un bouton **"Publier"** pour ajouter une nouvelle note.
+| Vue | Présence du champ |
+|-----|-------------------|
+| `index` (liste) | La description est affichée pour chaque todo, sous le nom (par exemple en sous-titre discret). Si la description est vide, rien ne s'affiche à cet endroit — pas de mention "aucune description". |
+| `create` (formulaire de création) | Un champ de saisie multi-ligne (`textarea`) permet de renseigner la description. |
+| `show` (détail) | La description est affichée intégralement, dans une zone clairement identifiée. Si la description est vide, la zone correspondante peut être absente ou afficher une indication discrète (à ton choix). |
+| `edit` (formulaire d'édition) | Un champ de saisie multi-ligne, **pré-rempli** avec la description actuelle. |
 
-L'ajout d'une note la fait apparaître immédiatement dans la liste sans quitter la page de détail. La suppression d'une note la retire immédiatement de la liste.
+### Cohérence
 
----
-
-### 4. Édition d'une candidature
-
-Page atteinte via le bouton "Modifier" depuis la liste ou depuis le détail.
-
-Le formulaire est **identique à celui de la création**, mais pré-rempli avec les valeurs actuelles de la candidature.
-
-À la soumission, les modifications sont persistées et l'utilisateur est redirigé vers la liste.
-
-Un bouton "Annuler" et une mention "← Retour à la liste" permettent de revenir en arrière sans modifier.
-
----
-
-## Statuts et couleurs des badges
-
-Chaque statut est représenté par un badge coloré, visible **dans la liste et dans le détail** :
-
-| Statut    | Couleur du badge |
-|-----------|------------------|
-| Postulée  | Bleu             |
-| Entretien | Ambre / orangé   |
-| Refusée   | Rouge            |
-| Acceptée  | Vert             |
-
-Les badges utilisent un fond pastel clair et un texte plus foncé de la même teinte, sous forme de pastille arrondie compacte. Ils ne sont pas cliquables — pour changer le statut d'une candidature, il faut passer par la page d'édition.
+L'affichage de la description doit s'intégrer naturellement au design existant. Elle ne doit pas dénaturer la mise en page actuelle des trois pages concernées.
 
 ---
 
@@ -137,92 +92,108 @@ Les badges utilisent un fond pastel clair et un texte plus foncé de la même te
 
 ### Persistance
 
-Toutes les données saisies (candidatures, notes, modifications) doivent **survivre à un rafraîchissement de page** et à un redémarrage de l'application.
+Toutes les modifications réalisées via l'interface (création, modification, suppression, bascule de statut) doivent **survivre à un rafraîchissement de page** et à un redémarrage de l'application.
 
-### Suppression en cascade
+### Cohérence
 
-Quand une candidature est supprimée, **ses notes le sont aussi**. Aucune note "orpheline" ne doit subsister.
+L'état d'une todo doit être le même partout dans l'application : si tu coches une todo depuis la liste, elle apparaît comme terminée sur sa page de détail ; si tu modifies son nom depuis le formulaire d'édition, le nouveau nom apparaît à la fois dans la liste et sur sa page de détail.
 
 ### Navigation
 
-L'utilisateur doit pouvoir atteindre n'importe quelle page du module **uniquement via les liens et boutons de l'interface**. À aucun moment il ne doit avoir besoin de taper une URL à la main.
-
-La barre de navigation existante doit permettre de basculer entre Todos et Candidatures sans heurts.
+L'utilisateur doit pouvoir réaliser l'intégralité du parcours (créer, consulter, modifier, supprimer, basculer le statut) **uniquement via les liens et boutons de l'interface**, sans avoir besoin de taper une URL.
 
 ---
 
 ## Design
 
-### Fidélité visuelle
+Le projet remis utilise déjà un design abouti (cartes blanches, palette grise, badges, états interactifs). Toute modification ou ajout que tu apportes doit **respecter ce langage visuel** : mêmes espacements, mêmes formes, même typographie.
 
-Le rendu visuel des 4 pages (liste, création, détail, édition) doit reproduire **fidèlement** les maquettes fournies en annexe. Cela concerne :
+Le champ `description` doit s'intégrer harmonieusement aux vues existantes — typiquement comme un sous-titre dans la liste, comme une zone de texte dans les formulaires, et comme un paragraphe distinct sur la page de détail.
 
-- les espacements (marges, padding, distances entre les éléments),
-- la typographie (tailles, graisses, hiérarchie),
-- les couleurs (textes, fonds, bordures, badges),
-- la forme des éléments (rayons d'arrondi des cartes, des boutons, des inputs),
-- les états interactifs (hover sur les liens, focus sur les inputs, états des boutons),
-- la structure des composants (carte blanche pour les sections, liste pour les énumérations, etc.).
+Aucun changement de palette, de framework ou de structure globale n'est attendu sur le module Todos.
 
-L'utilisateur doit pouvoir poser une maquette à côté de ton rendu et **ne voir aucune différence notable**.
+---
 
-### Cohérence avec le module Todos
+## Bonus 1 — Commentaires sur les todos
 
-Le module Candidatures s'intègre dans une application qui contient déjà le module Todos. Ton rendu doit donc être **visuellement cohérent** avec ce qui existe déjà : même barre de navigation, même fond de page, même langage visuel pour les cartes et les boutons.
+La page de détail des todos comporte une **section "Commentaires"** déjà esquissée visuellement, mais entièrement statique. Aucun commentaire n'est réellement enregistré, aucun n'est réellement supprimé.
 
-### CSS
+Mettre cette fonctionnalité en service implique :
 
-Tu as **deux options possibles** pour styliser la partie Candidatures :
+- L'introduction d'une nouvelle entité **Commentaire**, liée à la todo qu'il concerne.
+- L'**ajout** d'un commentaire via le formulaire en bas de la page de détail : le commentaire apparaît immédiatement dans la liste après publication.
+- La **suppression** individuelle d'un commentaire : il disparaît immédiatement de la liste.
+- La **persistance** des commentaires en base de données.
+- La **suppression en cascade** : supprimer une todo supprime également l'ensemble de ses commentaires.
 
-- **Tailwind** — le framework déjà en place dans le projet (utilisé par le module Todos). Tu peux le réutiliser tel quel.
-- **CSS pur écrit à la main**, sans aucun framework — l'occasion de démontrer ta maîtrise des règles de mise en page et de stylisme.
+Ce bonus est valorisé indépendamment du reste. Il n'est pas exigé que la mission principale soit intégralement terminée pour s'y atteler, mais il est recommandé de la finaliser en priorité.
 
-**Aucun autre framework CSS n'est autorisé** (pas de Bootstrap, Bulma, Foundation, etc.). Choisis l'approche qui te met le plus en confiance — les deux sont valorisées de la même façon dans la grille de cotation.
+---
 
-Tu peux organiser ton CSS comme tu le souhaites (un fichier global, plusieurs fichiers par page, etc.) tant que le résultat est propre et maintenable.
+## Bonus 2 — Module Candidatures
+
+Le projet ne comporte aucun module **Candidatures**. Ce bonus consiste à le créer entièrement, sur le modèle du module Todos déjà en place.
+
+### Périmètre attendu
+
+- Une nouvelle entité **Candidature** avec les attributs suivants :
+    - Entreprise (texte court)
+    - Poste (texte court)
+    - Statut, parmi exactement les valeurs : *Postulée*, *Entretien*, *Refusée*, *Acceptée*
+    - Date de candidature
+- Un parcours complet de gestion : liste, création, détail, édition, suppression.
+- Un statut affiché sous forme de **badge coloré** (bleu, ambre, rouge, vert selon la valeur), visible dans la liste et dans le détail.
+- Un lien **"Candidatures"** dans la barre de navigation partagée, permettant de basculer entre les deux modules.
+- Un état vide géré sur la liste (message d'invitation quand aucune candidature n'existe).
+
+### Cohérence
+
+Le module Candidatures doit s'intégrer dans le même langage visuel que le module Todos. Tu peux conserver Tailwind (déjà en place) ou écrire ton propre CSS — aucun autre framework n'est autorisé.
+
+Ce bonus est ambitieux et représente un travail conséquent. Il est valorisé à hauteur de son ampleur, mais ne constitue en aucun cas un préalable à la réussite de l'examen.
+
+---
+
+## Versionnement et remise
+
+Le projet doit être **obligatoirement versionné avec Git**. À la remise, deux éléments sont attendus, sans alternative possible :
+
+- **Un dépôt distant accessible à l'évaluateur** (GitHub, GitLab ou équivalent), permettant de consulter l'historique complet des commits.
+- **Une archive ZIP du projet**, contenant l'intégralité du code source remis.
+
+L'historique des commits doit refléter une progression cohérente du travail. Un dépôt réduit à un unique commit final ou sans historique exploitable est considéré comme non conforme.
+
+L'examen est **réalisé individuellement**. Aucun travail collaboratif n'est attendu ni autorisé.
 
 ---
 
 ## Livrables
 
-À la fin de l'examen, on doit pouvoir :
+À la fin de l'examen, on doit pouvoir, depuis le projet que tu remets :
 
-1. Cloner ou récupérer ton projet et le lancer sans procédure exotique.
-2. Voir la barre de navigation avec les deux modules.
-3. Naviguer vers le module Candidatures et y trouver une page accueillante (même vide).
-4. Créer une candidature complète et la retrouver dans la liste après refresh.
-5. Cliquer sur une candidature et voir sa page de détail.
-6. Ajouter plusieurs notes, les voir apparaître dans l'ordre, en supprimer une.
-7. Modifier une candidature, voir le changement reflété partout (liste, détail).
-8. Supprimer une candidature et constater qu'elle disparaît bien — ses notes aussi.
-9. Avoir une expérience cohérente, sans bug visible et sans page d'erreur brute.
+1. Lancer l'application sans procédure exotique.
+2. Naviguer vers la liste des todos, en créer une nouvelle (avec ou sans description).
+3. Cliquer sur une todo pour ouvrir sa page de détail, et y voir ses informations réelles (nom, description, statut).
+4. Basculer le statut de la todo depuis la page de détail, et observer le changement immédiatement.
+5. Ouvrir le formulaire d'édition, voir ses champs pré-remplis, modifier des valeurs et constater que les changements sont persistés dans la liste et le détail.
+6. Supprimer une todo depuis sa page de détail, et constater qu'elle disparaît de la liste.
+7. Effectuer un rafraîchissement de page et constater que toutes les données saisies subsistent.
 
----
-
-## Critères d'évaluation
-
-| Critère                                    | Poids indicatif |
-|--------------------------------------------|-----------------|
-| Fonctionnalité CRUD candidatures           | important       |
-| Fonctionnalité notes (ajout, suppression)  | important       |
-| Persistance et suppression en cascade      | important       |
-| Fidélité du design aux maquettes           | important       |
-| CSS propre, organisé, sans framework       | important       |
-| Navigation fluide et intégration           | moyen           |
-| Gestion des cas d'erreur basiques          | moyen           |
-| Qualité globale du rendu                   | moyen           |
+Si tu as réalisé un ou plusieurs des bonus, le parcours utilisateur correspondant doit également être réalisable de bout en bout sans erreur.
 
 ---
 
-## Hors-scope (à ne pas faire)
+## Hors-scope
 
-Pour rester dans le périmètre attendu, **tu n'as pas besoin d'implémenter** :
+Pour rester dans le périmètre attendu, tu **n'as pas besoin d'implémenter** :
 
-- filtrage, tri, recherche sur la liste,
-- pagination,
-- notifications visuelles (toasts, modales de confirmation),
-- export, statistiques, dashboards,
-- internationalisation (l'application reste en français),
-- envoi d'emails ou notifications.
+- Système de comptes utilisateurs ou authentification.
+- Filtrage, tri ou recherche sur la liste des todos.
+- Pagination.
+- Notifications visuelles (messages éclair, modales de confirmation).
+- Export, statistiques, tableaux de bord.
+- Internationalisation (l'application reste en français).
+- Envoi d'emails ou de notifications.
+- Gestion fine des cas d'erreur (formulaire vide, ressource inexistante) : ces situations ne sont pas testées dans l'évaluation.
 
-Si tu termines tôt et veux pousser plus loin, parles-en avant — ces points peuvent être valorisés mais ne sont pas attendus.
+Si tu termines en avance et souhaites approfondir un point particulier, signale-le avant — il pourra être valorisé à la marge.

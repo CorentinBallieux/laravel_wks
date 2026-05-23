@@ -30,3 +30,22 @@ Route::prefix('todos')
         });
     });
 
+Route::prefix('applications')
+    ->name('applications.')
+    ->group(function () {
+        Route::get('/', [ApplicationController::class, 'index'])->name('index');
+        Route::post('/', [ApplicationController::class, 'store'])->name('store');
+        Route::get('/create', [ApplicationController::class, 'create'])->name('create');
+
+        Route::prefix('{application}')->group(function () {
+            Route::get('/', [ApplicationController::class, 'show'])->name('show');
+            Route::put('/', [ApplicationController::class, 'update'])->name('update');
+            Route::delete('/', [ApplicationController::class, 'destroy'])->name('destroy');
+            Route::get('/edit', [ApplicationController::class, 'edit'])->name('edit');
+
+            Route::prefix('notes')->name('notes.')->group(function () {
+                Route::post('/', [ApplicationNoteController::class, 'store'])->name('store');
+                Route::delete('/{note}', [ApplicationNoteController::class, 'destroy'])->name('destroy');
+            });
+        });
+    });
