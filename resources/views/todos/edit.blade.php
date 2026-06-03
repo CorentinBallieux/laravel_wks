@@ -10,7 +10,7 @@
             <h1 class="text-2xl font-semibold text-gray-900 mt-2">Modifier la todo</h1>
         </header>
 
-        <form action="{{ route('todos.update', ['todo' => 1]) }}" method="POST"
+        <form action="{{ route('todos.update', ['todo' => $todo->id]) }}" method="POST"
               class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 space-y-6">
             @csrf
             @method('PUT')
@@ -22,8 +22,15 @@
             </div>
 
             <div class="flex items-center gap-2">
-                <input type="checkbox" id="completed" name="completed"
-                       class="h-4 w-4 rounded border-gray-300">
+                @if ($todo->completed_at === null)                
+                    <input type="checkbox" id="completed" name="completed"
+                        class="h-4 w-4 rounded border-gray-300">
+
+                @else
+                    <input type="checkbox" id="completed" name="completed"
+                        class="h-4 w-4 rounded border-gray-300" checked>
+
+                @endif
                 <label for="completed" class="text-sm text-gray-700">Marquer comme terminée</label>
             </div>
 

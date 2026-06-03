@@ -59,4 +59,11 @@ class TodoController extends Controller
 
         return redirect()->route('todos.index');
     }
+
+    public function update(Request $request, Todo $todo)
+    {
+        $todo->name = $request->input('name');
+        $todo->save();
+        return redirect()->route('todos.index');
+    }
 }
