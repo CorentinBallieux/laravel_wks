@@ -20,9 +20,9 @@ class TodoController extends Controller
         return view('todos.create');
     }
 
-    public function show($id)
+    public function show(Todo $todo)
     {
-        return view('todos.show');
+        return view('todos.show', ['todo' => $todo]);
     }
 
     public function edit($id)

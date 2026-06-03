@@ -14,7 +14,7 @@
 
             <div>
                 <p class="text-sm font-medium text-gray-500">Nom</p>
-                <p class="text-gray-900 mt-1">Faire les courses</p>
+                <p class="text-gray-900 mt-1">{{ $todo->name }}</p>
             </div>
 
             <div>
