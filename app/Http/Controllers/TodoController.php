@@ -34,7 +34,7 @@ class TodoController extends Controller
     {
         $todo->delete();
 
-        return redirect()->back();
+        return redirect()->route('todos.index');
     }
 
     public function toggle(Todo $todo)

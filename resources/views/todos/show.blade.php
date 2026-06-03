@@ -20,11 +20,21 @@
             <div>
                 <p class="text-sm font-medium text-gray-500">Statut</p>
                 <div class="mt-2 flex items-center gap-2">
-                    <form action="{{ route('todos.toggle', ['todo' => 1]) }}" method="POST" class="shrink-0">
+                    <form action="{{ route('todos.toggle', ['todo' => $todo->id]) }}" method="POST" class="shrink-0">
                         @csrf
                         @method('PATCH')
-                        <button type="submit" title="Marquer comme terminée"
+                        @if ($todo->completed_at === null)
+                            <button type="submit" title="Marquer comme terminée"
                                 class="h-5 w-5 rounded-full border-2 border-gray-300 hover:border-gray-500 transition cursor-pointer"></button>
+                        @else
+                            <button type="submit" title="Marquer comme à faire"
+                                class="h-5 w-5 rounded-full bg-green-500 border-2 border-green-500 hover:bg-green-600 hover:border-green-600 transition cursor-pointer flex items-center justify-center">
+                                <svg class="h-3 w-3 text-white" viewBox="0 0 12 12" fill="none">
+                                    <path d="M2 6l3 3 5-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </svg>
+                            </button>
+                        @endif
                     </form>
                     <span class="text-gray-800">À faire</span>
                 </div>
@@ -36,7 +46,7 @@
                     Modifier
                 </a>
 
-                <form action="{{ route('todos.destroy', ['todo' => 1]) }}" method="POST" class="inline">
+                <form action="{{ route('todos.destroy', ['todo' => $todo->id]) }}" method="POST" class="inline">
                     @csrf
                     @method('DELETE')
                     <button type="submit"
