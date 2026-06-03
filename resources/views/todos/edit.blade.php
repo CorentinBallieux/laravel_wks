@@ -17,7 +17,7 @@
 
             <div>
                 <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nom de la tâche</label>
-                <input type="text" id="name" name="name" value="Faire les courses"
+                <input type="text" id="name" name="name" value="{{ $todo->name }}"
                        class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-gray-900">
             </div>
 

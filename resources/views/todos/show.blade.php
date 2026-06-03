@@ -41,7 +41,7 @@
             </div>
 
             <div class="flex items-center gap-3 pt-4 border-t border-gray-200">
-                <a href="{{ route('todos.edit', ['todo' => 1]) }}"
+                    
                    class="bg-gray-900 text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-gray-700 transition">
                     Modifier
                 </a>
