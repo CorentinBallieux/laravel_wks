@@ -9,11 +9,12 @@ class TodoController extends Controller
 {
     public function index()
     {
-        $todos = Todo::all();
+        $todos = Todo::withCount('comments')->get();
         $doneCount = Todo::query()->whereNotNull('completed_at')->count();
 
         return view('todos.index', ['todos' => $todos, 'doneCount' => $doneCount]);
     }
+    
 
     public function create()
     {
@@ -33,6 +34,7 @@ class TodoController extends Controller
 
     public function destroy(Todo $todo)
     {
+        $todo->comments()->delete();
         $todo->delete();
 
         return redirect()->route('todos.index');

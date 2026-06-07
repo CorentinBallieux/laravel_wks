@@ -73,7 +73,9 @@
 
             <header class="flex items-center justify-between px-6 py-4 border-b border-gray-200">
                 <h2 class="text-lg font-semibold text-gray-900">Commentaires</h2>
-                <span class="text-sm text-gray-500">2 commentaires</span>
+                @if ($comments->count() > 0)
+                    <span class="text-sm text-gray-500">{{ $comments->count() }} commentaires</span>
+                @endif
             </header>
 
             <ul class="divide-y divide-gray-200">
