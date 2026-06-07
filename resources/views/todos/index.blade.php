@@ -40,8 +40,13 @@
                         @endif
                     </form>
 
-                    <a href="{{ route('todos.show', ['todo' => $todo->id]) }}"
-                        class="flex-1 text-gray-800 hover:underline">{{ $todo->name }}</a>
+                    <div class="flex-1">
+                        <a href="{{ route('todos.show', ['todo' => $todo->id]) }}"
+                            class="text-gray-800 hover:underline">{{ $todo->name }}</a>
+                        @if ($todo->description)
+                            <p class="text-sm text-gray-400 mt-0.5 italic pl-4">{{ $todo->description }}</p>
+                        @endif
+                    </div>
 
                     <div class="flex items-center gap-2">
                         <a href="{{ route('todos.edit', ['todo' => $todo->id]) }}"
