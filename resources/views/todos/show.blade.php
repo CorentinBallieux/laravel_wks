@@ -46,7 +46,11 @@
                             </button>
                         @endif
                     </form>
-                    <span class="text-gray-800">À faire</span>
+                    @if ($todo->completed_at === null)
+                        <span class="text-gray-800">À faire</span>
+                    @else
+                        <span class="text-gray-800">Terminée</span>
+                    @endif
                 </div>
             </div>
 
