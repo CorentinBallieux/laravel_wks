@@ -14,18 +14,9 @@
 
             <div>
                 <p class="text-sm font-medium text-gray-500">Nom</p>
-                <p class="text-gray-900 mt-1 pl-4">{{ $todo->name }}</p>
+                <p class="text-gray-900 mt-1">{{ $todo->name }}</p>
             </div>
-
-            {{-- Bloc description --}}
-            <div>
-                <p class="text-sm font-medium text-gray-500">Description</p>
-                @if ($todo->description)
-                    <p class="text-gray-400 mt-1 italic pl-4">{{ $todo->description }}</p>
-                @else
-                    <p class="text-sm text-gray-400 mt-1 italic pl-4">Aucune description.</p>
-                @endif
-            </div>            
+            
 
             <div>
                 <p class="text-sm font-medium text-gray-500">Statut</p>
@@ -77,12 +68,12 @@
             </header>
 
             <ul class="divide-y divide-gray-200">
-                @foreach ($comments as $comment)
-                    <li class="flex items-start gap-3 px-5 py-4">
-                        <div class="flex-1">
-                            <p class="text-gray-800">{{ $comment->content }}</p>
-                            <p class="text-xs text-gray-500 mt-1 pl-3">{{ $comment->created_at->translatedFormat('d F Y à H:i') }}</p>
-                        </div>
+
+                <li class="flex items-start gap-3 px-5 py-4">
+                    <div class="flex-1">
+                        <p class="text-gray-800">N'oublie pas les œufs bio cette fois.</p>
+                        <p class="text-xs text-gray-500 mt-1">il y a 2 heures</p>
+                    </div>
                     <form action="{{ route('todos.comments.destroy', ['todo' => 1, 'comment' => 1]) }}" method="POST">
                         @csrf
                         @method('DELETE')
@@ -91,11 +82,26 @@
                             Supprimer
                         </button>
                     </form>
-                    </li>
-                @endforeach
+                </li>
+
+                <li class="flex items-start gap-3 px-5 py-4">
+                    <div class="flex-1">
+                        <p class="text-gray-800">Vérifier les promos sur le fromage avant d'y aller.</p>
+                        <p class="text-xs text-gray-500 mt-1">hier</p>
+                    </div>
+                    <form action="{{ route('todos.comments.destroy', ['todo' => 1, 'comment' => 2]) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit"
+                                class="text-sm text-red-600 hover:text-red-700 px-3 py-1 rounded-md hover:bg-red-50 transition">
+                            Supprimer
+                        </button>
+                    </form>
+                </li>
+
             </ul>
 
-            <form action="{{ route('todos.comments.store', ['todo' => $todo->id]) }}" method="POST"
+            <form action="{{ route('todos.comments.store', ['todo' => 1]) }}" method="POST"
                   class="px-5 py-4 border-t border-gray-200 space-y-3">
                 @csrf
                 <textarea name="content" rows="2"
