@@ -14,16 +14,16 @@
 
             <div>
                 <p class="text-sm font-medium text-gray-500">Nom</p>
-                <p class="text-gray-900 mt-1">{{ $todo->name }}</p>
+                <p class="text-gray-900 mt-1 pl-4">{{ $todo->name }}</p>
             </div>
 
             {{-- Bloc description --}}
             <div>
                 <p class="text-sm font-medium text-gray-500">Description</p>
                 @if ($todo->description)
-                    <p class="text-gray-900 mt-1">{{ $todo->description }}</p>
+                    <p class="text-gray-400 mt-1 italic pl-4">{{ $todo->description }}</p>
                 @else
-                    <p class="text-sm text-gray-400 mt-1 italic">Aucune description.</p>
+                    <p class="text-sm text-gray-400 mt-1 italic pl-4">Aucune description.</p>
                 @endif
             </div>            
 
