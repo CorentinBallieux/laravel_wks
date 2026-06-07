@@ -110,7 +110,7 @@
 
             </ul>
 
-            <form action="{{ route('todos.comments.store', ['todo' => 1]) }}" method="POST"
+            <form action="{{ route('todos.comments.store', ['todo' => $todo->id]) }}" method="POST"
                   class="px-5 py-4 border-t border-gray-200 space-y-3">
                 @csrf
                 <textarea name="content" rows="2"
