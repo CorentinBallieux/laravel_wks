@@ -54,6 +54,7 @@ class TodoController extends Controller
     {
         $todo = new Todo();
         $todo->name = $request->input('name');
+        $todo->description = $request->input('description');
 
         $todo->save();
 
@@ -63,6 +64,7 @@ class TodoController extends Controller
     public function update(Request $request, Todo $todo)
     {
         $todo->name = $request->input('name');
+        $todo->description = $request->input('description');
         $todo->completed_at = $request->has('completed') ? now() : null;
         $todo->save();
         return redirect()->route('todos.index');

@@ -17,6 +17,16 @@
                 <p class="text-gray-900 mt-1">{{ $todo->name }}</p>
             </div>
 
+            {{-- Bloc description --}}
+            <div>
+                <p class="text-sm font-medium text-gray-500">Description</p>
+                @if ($todo->description)
+                    <p class="text-gray-900 mt-1">{{ $todo->description }}</p>
+                @else
+                    <p class="text-sm text-gray-400 mt-1 italic">Aucune description.</p>
+                @endif
+            </div>            
+
             <div>
                 <p class="text-sm font-medium text-gray-500">Statut</p>
                 <div class="mt-2 flex items-center gap-2">
