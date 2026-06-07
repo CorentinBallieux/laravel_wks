@@ -21,6 +21,12 @@
                        class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-gray-900">
             </div>
 
+            <div>
+                <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                <textarea id="description" name="description" rows="3" placeholder="Ajouter une description…"
+                        class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-gray-900">{{ $todo->description }}</textarea>
+            </div>
+
             <div class="flex items-center gap-2">
                 @if ($todo->completed_at === null)                
                     <input type="checkbox" id="completed" name="completed"
@@ -32,7 +38,7 @@
 
                 @endif
                 <label for="completed" class="text-sm text-gray-700">Marquer comme terminée</label>
-            </div>
+            </div>            
 
             <div class="flex items-center gap-3 pt-2">
                 <button type="submit"
