@@ -100,7 +100,7 @@
             <form action="{{ route('todos.comments.store', ['todo' => $todo->id]) }}" method="POST"
                   class="px-5 py-4 border-t border-gray-200 space-y-3">
                 @csrf
-                <textarea name="content" rows="2"
+                <textarea name="content" rows="2" required
                           placeholder="Ajouter un commentaire…"
                           class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-gray-900"></textarea>
                 <div class="flex justify-end">
