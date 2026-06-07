@@ -83,7 +83,7 @@
                             <p class="text-gray-800">{{ $comment->content }}</p>
                             <p class="text-xs text-gray-500 mt-1 pl-3">{{ $comment->created_at->translatedFormat('d F Y à H:i') }}</p>
                         </div>
-                    <form action="{{ route('todos.comments.destroy', ['todo' => 1, 'comment' => 1]) }}" method="POST">
+                    <form action="{{ route('todos.comments.destroy', ['todo' => $todo->id, 'comment' => $comment->id]) }}" method="POST">
                         @csrf
                         @method('DELETE')
                         <button type="submit"

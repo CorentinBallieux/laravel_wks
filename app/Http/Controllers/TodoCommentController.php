@@ -17,4 +17,10 @@ class TodoCommentController extends Controller
 
         return redirect()->back();
     }
+
+    public function destroy(Todo $todo, Comment $comment) {
+        $comment->delete();
+
+        return redirect()->back();
+    }
 }
